@@ -1,0 +1,60 @@
+.contact-loader{
+    display: none;
+}
+
+.contact-form-fail{
+    display: none;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ffdede;
+}
+
+.contact-form-done{
+    display: none;
+    padding: 20px;
+    text-align: center;
+    background-color: #b4ffac;
+}
+
+.w-dyn-empty{
+    display: none;
+}
+
+.apply{
+    border: 1px solid #2033DF;
+    padding: 3px 10px;
+    margin-left: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.apply:hover{
+    background-color: #2033DF;
+    color: #fff;
+}
+
+.clear{
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+}
+
+.loader{
+    width: 10%;
+    margin: auto;
+    display: none;
+}
+
+.email-sub-fail{
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffdede;
+}
+
+.email-sub-success{
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #b4ffac;
+}
