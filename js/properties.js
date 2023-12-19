@@ -16,6 +16,11 @@ async function getProperties(){
 
 getProperties()
 
+document.querySelectorAll(".clear").forEach(btn => {
+  btn.addEventListener("click", ()=>{
+    location.reload()
+  })
+})
 
 let locationArray = ["Dubai", "Brazil", "England", "Italy", "Las Vegas"]
 
@@ -57,7 +62,20 @@ function addItemToFilter(location) {
 
 
 // Location Filter API
-async function applyLocationFilter(){
+document.querySelector(".locationFilter").addEventListener("click", async (e)=>{
+
+  e.target.parentElement.parentElement.parentElement.classList.remove("w--open")
+  e.target.parentElement.parentElement.parentElement.parentElement.classList.remove("w--open");
+  document.querySelector(".w-dyn-items").innerHTML = ""
+  document.querySelector(".w-dyn-empty").style.display = "none"
+  loader.style.display = "block"
+
+
+  if(filterLocation.length === 0){
+    getProperties()
+    return
+  }
+
   document.querySelector(".w-dyn-items").innerHTML = ""
   document.querySelector(".w-dyn-empty").style.display = "none"
   loader.style.display = "block"
@@ -80,12 +98,11 @@ async function applyLocationFilter(){
   }
 
   console.log(filterLocation);
-}
+})
 
 
 
-
-const propertyTypeArray = ["Appartments", "Penthouse", "Tenthouses", "Villas"]
+const propertyTypeArray = ["Apartments", "Penthouse", "Tenthouses", "Villas"]
 let filterProperty = []
 
 propertyTypeArray.map(property => {
@@ -103,10 +120,11 @@ propertyTypeArray.map(property => {
   container.appendChild(label);
 });
 
+
 function addPropertyToFilter(property) {
   const checkbox = document.getElementById(`checkbox-${property}`);
-  console.log(checkbox);
 
+  
   if (checkbox.checked) {
     // If checkbox is checked, add location to filterProperty array if not already present
     if (!filterProperty.includes(property)) {
@@ -123,10 +141,19 @@ function addPropertyToFilter(property) {
 
 
 // Property Filter API
-async function applyPropertyTypeFilter(){
+document.querySelector(".propertyApply").addEventListener("click", async (e) => {
+
+  e.target.parentElement.parentElement.parentElement.classList.remove("w--open")
+  e.target.parentElement.parentElement.parentElement.parentElement.classList.remove("w--open");
   document.querySelector(".w-dyn-items").innerHTML = ""
   document.querySelector(".w-dyn-empty").style.display = "none"
   loader.style.display = "block"
+
+  if(filterProperty.length === 0){
+    getProperties()
+    return
+  }
+  
   console.log(JSON.stringify({
     "filter_params_key":"property_type",
     "filter_params_value":filterProperty
@@ -148,15 +175,23 @@ async function applyPropertyTypeFilter(){
     console.log(data);
   }
   console.log(filterProperty);
-}
-
+})
 
 
 // Price filter
-async function applyPriceFilter(){
+document.querySelector(".priceApplyFilter").addEventListener("click", async(e) => {
+  
+  if(document.querySelector(".price").value === ""){
+    getProperties()
+    return
+  }
+
+  e.target.parentElement.parentElement.parentElement.classList.remove("w--open")
+  e.target.parentElement.parentElement.parentElement.parentElement.classList.remove("w--open");
   document.querySelector(".w-dyn-items").innerHTML = ""
   document.querySelector(".w-dyn-empty").style.display = "none"
   loader.style.display = "block"
+
   const response = await fetch(`https://admin.euroluxuryproperties.com/filter-estates/`,{
     method:"PUT",
     headers:{
@@ -176,14 +211,24 @@ async function applyPriceFilter(){
     console.log(data);
   }
   console.log(filterProperty);
-}
+})
+
 
 
 // Looking for filter
-async function applyLookingForFilter(){
+document.querySelector(".lookingForFilter").addEventListener("click", async (e) => {
+
+  if(document.querySelector("input[type='radio'][name=property]:checked") === null){
+    getProperties()
+    return
+  }
+
+  e.target.parentElement.parentElement.parentElement.classList.remove("w--open")
+  e.target.parentElement.parentElement.parentElement.parentElement.classList.remove("w--open");
   document.querySelector(".w-dyn-items").innerHTML = ""
   document.querySelector(".w-dyn-empty").style.display = "none"
   loader.style.display = "block"
+
   console.log(document.querySelector("input[type='radio'][name=property]:checked").value);
   const response = await fetch(`https://admin.euroluxuryproperties.com/filter-estates/`,{
     method:"PUT",
@@ -202,8 +247,7 @@ async function applyLookingForFilter(){
     loader.style.display = "none"
     console.log(data);
   }
-}
-
+})
 
 
 let templateFunction = (estatesArray) => {
@@ -248,3 +292,8 @@ let templateFunction = (estatesArray) => {
     `
   ))
 }
+
+// function displayDropDown(){
+//   document.querySelector(".dropdown-list").classList.remove("w--open");
+//   console.log(document.querySelector(".dropdown-list").classList);
+// }
